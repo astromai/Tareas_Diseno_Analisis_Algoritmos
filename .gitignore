@@ -1,0 +1,11 @@
+# Ignorar archivos binarios
+*.bin
+
+# Ignorar archivos objeto
+*.o
+
+# Ignorar configuración de VS Code
+.vscode/
+
+# Ignorar sorter
+sorter
