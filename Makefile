@@ -1,24 +1,13 @@
 CC = gcc
-CFLAGS = -std=c11 -Wall -O2
+CFLAGS = -O2 -Wall
 
-SRCS = main.c external_mergesort.c external_quicksort.c io_utils.c
-OBJS = $(SRCS:.c=.o)
-DEPS = external_mergesort.h external_quicksort.h io_utils.h
+all: main
 
-EXEC = sorter
+main: main.c mergesort.c quicksort.c io_utils.c
+	$(CC) $(CFLAGS) -o main main.c mergesort.c quicksort.c io_utils.c
 
-.PHONY: all clean run
-
-all: $(EXEC)
-
-$(EXEC): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
-
-%.o: %.c $(DEPS)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-run: all
-	./$(EXEC)
+run: main
+	./main
 
 clean:
-	rm -f *.o $(EXEC) *.bin merge_* quick_* part_*.bin sorted_*.bin temp_*.bin
+	rm -f *.o main *.bin
