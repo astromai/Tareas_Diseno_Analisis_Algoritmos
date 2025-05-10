@@ -1,24 +1,60 @@
-CC = gcc
-CFLAGS = -std=c11 -Wall -O2
+CXX = g++
+CXXFLAGS = -std=c++11 -Wall -Wextra -O3 -march=native
+LDFLAGS = 
 
-SRCS = main.c external_mergesort.c external_quicksort.c io_utils.c
-OBJS = $(SRCS:.c=.o)
-DEPS = external_mergesort.h external_quicksort.h io_utils.h
+# Output binary name
+TARGET = external_sort
 
-EXEC = sorter
+# Source files
+SRCS = main.cpp external_sort.cpp
 
-.PHONY: all clean run
+# Object files
+OBJS = $(SRCS:.cpp=.o)
 
-all: $(EXEC)
+# Default target (build everything)
+all: $(TARGET)
 
-$(EXEC): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
+# Link object files to create the target executable
+$(TARGET): $(OBJS)
+	$(CXX) $(OBJS) -o $(TARGET) $(LDFLAGS)
 
-%.o: %.c $(DEPS)
-	$(CC) $(CFLAGS) -c $< -o $@
+# Compile source files into object files
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-run: all
-	./$(EXEC)
-
+# Clean target (remove executable and object files)
 clean:
-	rm -f *.o $(EXEC) *.bin merge_* quick_* part_*.bin sorted_*.bin temp_*.bin
+	rm -f $(TARGET) $(OBJS)
+
+# Clean everything, including temporary data files
+clean-all: clean
+	rm -f *.bin results.csv
+
+# Rebuild everything from scratch
+rebuild: clean all
+
+# Find optimal arity value
+find-arity: all
+	./$(TARGET) find_arity
+
+# Run tests with specified arity (default 4)
+run-tests: all
+	./$(TARGET) run_tests 4
+
+# Run full experiment (find optimal arity and run tests)
+full: all
+	./$(TARGET) full
+
+# Help target
+help:
+	@echo "Available targets:"
+	@echo "  all        - Build the executable"
+	@echo "  clean      - Remove object files and executable"
+	@echo "  clean-all  - Remove object files, executable, and temporary data files"
+	@echo "  rebuild    - Rebuild everything from scratch"
+	@echo "  find-arity - Find the optimal arity value only"
+	@echo "  run-tests  - Run experiments with default arity (4)"
+	@echo "  full       - Find optimal arity and run all experiments"
+	@echo "  help       - Show this help message"
+
+.PHONY: all clean clean-all rebuild find-arity run-tests full help
