@@ -70,17 +70,18 @@ Los experimentos:
 
 ## Uso con Docker
 
+Para ejecutar los experimentos usando el contenedor entregado:
 
-Para ejecutar los experimentos en un ambiente controlado con memoria limitada:
-
-1. Crear la imagen de Docker:
+1. Agregar el contenedor a la carpeta del proyecto:
 ```bash
-docker build -t external_sort .
+docker run --rm -it -v "$PWD":/workspace pabloskewes/cc4102-cpp-env bash
 ```
+
+Nota: es necesario "salir" del contenedor antes de ejecutar el siguiente comando
 
 2. Ejectuar el contenedor con memoria limitada:
 ```bash
-docker run --memory=60m -it external_sort
+docker run --rm -it -m 500m -v "$PWD":/workspace pabloskewes/cc4102-cpp-env bash
 ```
 
 Dentro del contenedor, es posible ejecutar los distintos comandos descritos antes.
