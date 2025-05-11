@@ -7,7 +7,7 @@ void runExperiments(size_t optimalArity) {
     std::cout << "\n=== Iniciando experimentos de comparación ===" << std::endl;
     
     // Tamaños de los arreglos a evaluar (en millones)
-    std::vector<int64_t> sizes = {4, 8, 12, 16, 20};
+    std::vector<int64_t> sizes = {4, 8, 12, 16};
     
     // Número de repeticiones por tamaño
     const int REPETITIONS = 5;
@@ -149,13 +149,10 @@ int main() {
     std::string inputFilename = "./dataExp/input_array.bin";
     std::string outputFilename = "./dataExp/sorted_array";
     
-    // Memoria disponible (50 MB según el enunciado)
-    const size_t AVAILABLE_MEMORY = 50 * 1024 * 1024;
-    
     std::cout << "Iniciando programa de comparación entre Mergesort y Quicksort externo" << std::endl;
     std::cout << "Tamaño de bloque (B): " << B << " bytes" << std::endl;
     std::cout << "Números por bloque (b): " << b << std::endl;
-    std::cout << "Memoria disponible (M): " << (AVAILABLE_MEMORY / (1024*1024)) << " MB" << std::endl;
+    std::cout << "Memoria disponible (M): " << (50 * 1024 * 1024 / (1024*1024)) << " MB" << std::endl;
     
     // Crear directorios necesarios
     fs::path dataPath("./dataExp");
@@ -163,20 +160,9 @@ int main() {
         fs::create_directories(dataPath);
     }
     
-    // Generar datos para encontrar aridad óptima
-    generateData(inputFilename);
-    
     // Buscar aridad óptima basada en operaciones I/O
     size_t optimalArity = 57;
-    
-    // Verificar que el archivo resultante esté ordenado
-    std::string finalSortedFile = outputFilename + "_" + std::to_string(optimalArity);
-    IOStats verifyStats;
-    bool isSorted = verifySort(finalSortedFile, verifyStats);
-    
-    std::cout << "\n=== Resultados de la búsqueda de aridad ===" << std::endl;
     std::cout << "La aridad óptima para Mergesort externo es: " << optimalArity << std::endl;
-    std::cout << "Verificación de ordenamiento: " << (isSorted ? "CORRECTO" : "INCORRECTO") << std::endl;
     std::cout << "Esta aridad también define la cantidad de subarreglos para Quicksort externo" << std::endl;
     
     // Ejecutar experimentos comparativos

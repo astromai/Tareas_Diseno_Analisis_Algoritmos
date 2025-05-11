@@ -1,7 +1,4 @@
 #include "iostats.h"
-#include <fstream>
-#include <vector>
-#include "constants.h"  // Necesario para la constante B
 
 // Implementación de métodos de IOStats
 size_t IOStats::total() const {

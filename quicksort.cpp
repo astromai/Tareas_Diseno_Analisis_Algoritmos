@@ -1,4 +1,3 @@
-#include "arity.h"
 #include "mergesort.h"
 #include "iostats.h"
 #include "constants.h"
