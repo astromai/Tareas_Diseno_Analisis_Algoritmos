@@ -1,8 +1,8 @@
 # Variables
 CC = g++
 CFLAGS = -Wall -g
-TARGET = aridad_io
-SRC = aridad_io.cpp  # Especifica el archivo .cpp principal
+TARGET = arity
+SRC = arity.cpp  # Especifica el archivo .cpp principal
 OBJ = $(SRC:.cpp=.o) # Convierte el archivo .cpp en un archivo .o
 TEMP_DIRS = $(wildcard temp*/)
 

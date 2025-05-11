@@ -11,14 +11,16 @@
 #include <filesystem>
 #include <cmath>
 #include <limits>
+#include "mergesort.h"
+#include "iostats.h"
 
 namespace fs = std::filesystem;
 
-// Constantes
-const int64_t M = 60'000'000;    // Tamaño de la secuencia: 60M números
-const size_t NUM_SIZE = 8;       // Tamaño de cada número en bytes (64 bits)
-const size_t B = 4096;           // Tamaño de bloque en bytes (ajustar según sistema)
-const size_t b = B / NUM_SIZE;   // Cantidad de números de 64 bits por bloque
+// Constantes (las mismas que antes)
+const int64_t M = 60'000'000;
+const size_t NUM_SIZE = 8;
+const size_t B = 4096;
+const size_t b = B / NUM_SIZE;
 
 // Estructura para almacenar estadísticas de I/O
 struct IOStats {
