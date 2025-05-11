@@ -15,7 +15,16 @@
 
 namespace fs = std::filesystem;
 
-// Implementación de funciones
+/**
+ * @brief Genera un archivo con datos aleatorios para pruebas de ordenamiento
+ * 
+ * @param filename Ruta del archivo a generar
+ * @param size Cantidad de números aleatorios a generar 
+ * 
+ * @note Usa una distribución uniforme en todo el rango de int64_t
+ * @note Muestra progreso cada 10% de la generación
+ * @note Crea el directorio padre si no existe
+ */
 void generateData(const std::string& filename, int64_t size) {
     std::cout << "Generando " << size << " números aleatorios..." << std::endl;
     
@@ -39,10 +48,6 @@ void generateData(const std::string& filename, int64_t size) {
         int64_t num = dist(gen);
         file.write(reinterpret_cast<const char*>(&num), sizeof(num));
         writesPerformed++;
-        
-        if (i % (size/10) == 0 && i > 0) {
-            std::cout << (i * 100 / size) << "% completado..." << std::endl;
-        }
     }
     
     file.close();
@@ -50,6 +55,17 @@ void generateData(const std::string& filename, int64_t size) {
     std::cout << "Operaciones de escritura realizadas: " << writesPerformed << std::endl;
 }
 
+/**
+ * @brief Verifica si un archivo está ordenado ascendentemente
+ * 
+ * @param filename Ruta del archivo a verificar
+ * @param stats Objeto para registrar estadísticas de I/O
+ * @return true si el archivo está correctamente ordenado
+ * @return false si encuentra elementos fuera de orden
+ * 
+ * @note Reporta la posición del primer error encontrado
+ * @note Usa bloques de 1,000,000 elementos para la verificación
+ */
 bool verifySort(const std::string& filename, IOStats& stats) {
     std::ifstream file(filename, std::ios::binary);
     if (!file) {
@@ -81,7 +97,20 @@ bool verifySort(const std::string& filename, IOStats& stats) {
     return true;
 }
 
-// Función para realizar búsqueda binaria de la aridad óptima
+/**
+ * @brief Busca la aridad óptima para algoritmos de ordenamiento externo
+ * 
+ * @param inputFilename Archivo de entrada para pruebas
+ * @param outputFilename Base del nombre para archivos de salida
+ * @param minArity Valor mínimo de aridad a evaluar
+ * @param maxArity Valor máximo de aridad a evaluar
+ * @param memoryLimit Memoria disponible en bytes
+ * @return size_t Aridad óptima encontrada
+ * 
+ * @note Usa búsqueda ternaria para optimizar el proceso
+ * @note Evalúa basándose en el número total de operaciones I/O
+ * @note Genera archivos temporales con formato outputFilename_arity
+ */
 size_t findOptimalArity(const std::string& inputFilename, const std::string& outputFilename, 
                         size_t minArity, size_t maxArity, size_t memoryLimit) {
     std::cout << "Buscando aridad óptima entre " << minArity << " y " << maxArity << "..." << std::endl;
@@ -133,6 +162,16 @@ size_t findOptimalArity(const std::string& inputFilename, const std::string& out
     return bestArity;
 }
 
+/**
+ * @brief Función principal para determinar la aridad óptima
+ * 
+ * @return int Código de salida (0 = éxito)
+ * 
+ * @note Configuración por defecto:
+ *   - 60 millones de números (≈457MB)
+ *   - Memoria limitada a 128MB
+ *   - Busca aridad entre 2 y B (4096 bytes)
+ */
 int main() {
     // Nombre de archivos
     std::string inputFilename = "./data/input_array.bin";

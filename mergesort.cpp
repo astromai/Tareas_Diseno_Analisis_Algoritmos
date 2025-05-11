@@ -11,17 +11,41 @@
 
 namespace fs = std::filesystem;
 
-// Estructura para la cola de prioridad
+/**
+ * @brief Nodo para la cola de prioridad usada en la mezcla
+ * 
+ * Almacena un valor y el índice del archivo del cual proviene,
+ * permitiendo comparar valores de diferentes archivos durante la mezcla.
+ */
 struct HeapNode {
     int64_t value;
     size_t fileIndex;
     
+    /**
+     * @brief Operador de comparación para ordenar el min-heap
+     * @param other Otro nodo a comparar
+     * @return true si este nodo es mayor que el otro
+     */
     bool operator>(const HeapNode& other) const {
         return value > other.value;
     }
 };
 
-// Implementación de externalMergeSort
+/**
+ * @brief Implementa el algoritmo de MergeSort externo
+ * 
+ * @param inputFilename Archivo de entrada a ordenar
+ * @param outputFilename Archivo de salida ordenado
+ * @param arity Número de archivos a mezclar simultáneamente
+ * @param memoryLimit Límite de memoria en bytes
+ * @param stats Objeto para registrar estadísticas de I/O
+ * 
+ * @note Opera en dos fases principales:
+ *   1. División: Divide el archivo en chunks ordenados
+ *   2. Mezcla: Mezcla recursiva los chunks usando una cola de prioridad
+ * 
+ * @warning Crea y elimina archivos temporales en el directorio ./temp_[arity]
+ */
 void externalMergeSort(const std::string& inputFilename, const std::string& outputFilename, 
                       size_t arity, size_t memoryLimit, IOStats& stats) {
     auto startTime = std::chrono::high_resolution_clock::now();

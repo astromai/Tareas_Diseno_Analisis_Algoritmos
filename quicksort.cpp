@@ -14,7 +14,18 @@
 
 namespace fs = std::filesystem;
 
-// Función para particionar un archivo usando pivotes
+/**
+ * @brief Divide un archivo en particiones usando pivotes
+ * 
+ * @param inputFilename Nombre del archivo de entrada a particionar
+ * @param outputFilenames Vector con nombres de archivos para las particiones
+ * @param pivotes Vector con los valores pivote para la partición
+ * @param memoryLimit Límite de memoria en bytes para procesamiento
+ * @param stats Objeto para registrar estadísticas de I/O
+ * 
+ * @note Crea múltiples archivos de salida, uno por cada partición
+ * @note Los elementos menores al primer pivote van a la primera partición, etc.
+ */
 void partition(const std::string& inputFilename, 
                const std::vector<std::string>& outputFilenames,
                const std::vector<int64_t>& pivots, 
@@ -83,7 +94,16 @@ void partition(const std::string& inputFilename,
     }
 }
 
-// Función para seleccionar pivotes aleatorios del archivo
+/**
+ * @brief Genera un archivo con números enteros aleatorios
+ * 
+ * @param filename Ruta del archivo a generar
+ * @param size Cantidad de números aleatorios a generar
+ * 
+ * @note Crea el directorio padre si no existe
+ * @note Usa una distribución uniforme en todo el rango de int64_t
+ * @note El archivo resultante es binario con números de 64 bits
+ */
 std::vector<int64_t> selectPivots(const std::string& filename, size_t numPivots, IOStats& stats) {
     if (numPivots == 0) return {};
     
@@ -148,6 +168,15 @@ std::vector<int64_t> selectPivots(const std::string& filename, size_t numPivots,
     return pivots;
 }
 
+/**
+ * @brief Genera datos aleatorios en un archivo binario
+ * 
+ * @param filename Nombre del archivo a generar
+ * @param size Cantidad de números aleatorios a generar
+ * 
+ * @note Crea el directorio padre si no existe
+ * @note Usa una distribución uniforme para generar los números
+ */
 void generateData(const std::string& filename, int64_t size) {
     std::cout << "Generando " << size << " números aleatorios..." << std::endl;
     
@@ -171,10 +200,6 @@ void generateData(const std::string& filename, int64_t size) {
         int64_t num = dist(gen);
         file.write(reinterpret_cast<const char*>(&num), sizeof(num));
         writesPerformed++;
-        
-        if (i % (size/10) == 0 && i > 0) {
-            std::cout << (i * 100 / size) << "% completado..." << std::endl;
-        }
     }
     
     file.close();
@@ -182,6 +207,16 @@ void generateData(const std::string& filename, int64_t size) {
     std::cout << "Operaciones de escritura realizadas: " << writesPerformed << std::endl;
 }
 
+/**
+ * @brief Verifica si un archivo está ordenado
+ * 
+ * @param filename Archivo a verificar
+ * @param stats Objeto para registrar estadísticas de I/O
+ * @return true si el archivo está ordenado, false en caso contrario
+ * 
+ * @note Verifica que cada elemento sea mayor o igual que el anterior
+ * @note Reporta la posición donde se encuentra el primer error
+ */
 bool verifySort(const std::string& filename, IOStats& stats) {
     std::ifstream file(filename, std::ios::binary);
     if (!file) {
@@ -214,7 +249,19 @@ bool verifySort(const std::string& filename, IOStats& stats) {
 }
 
 
-// Función para ordenar recursivamente un archivo usando Quicksort externo
+/**
+ * @brief Implementación recursiva del Quicksort externo
+ * 
+ * @param inputFilename Archivo de entrada a ordenar
+ * @param outputFilename Archivo de salida ordenado
+ * @param arity Número de particiones a crear en cada paso
+ * @param memoryLimit Límite de memoria para ordenar en RAM
+ * @param tempDir Directorio para archivos temporales
+ * @param stats Objeto para registrar estadísticas de I/O
+ * 
+ * @note Si el archivo cabe en memoria, lo ordena directamente
+ * @note Para archivos grandes, usa particionamiento recursivo
+ */
 void quicksortRecursive(const std::string& inputFilename, 
                         const std::string& outputFilename, 
                         size_t arity,
@@ -301,7 +348,18 @@ void quicksortRecursive(const std::string& inputFilename,
     outputFile.close();
 }
 
-// Función principal para el Quicksort externo
+/**
+ * @brief Ordena un archivo usando Quicksort externo
+ * 
+ * @param inputFilename Archivo de entrada a ordenar
+ * @param outputFilename Archivo de salida ordenado
+ * @param arity Número de particiones a crear en cada paso
+ * @param memoryLimit Límite de memoria en bytes
+ * @param stats Objeto para registrar estadísticas de I/O
+ * 
+ * @note Maneja toda la lógica de directorios temporales
+ * @note Mide y reporta tiempo de ejecución y operaciones I/O
+ */
 void externalQuickSort(const std::string& inputFilename, 
                       const std::string& outputFilename, 
                       size_t arity,

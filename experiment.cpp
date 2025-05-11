@@ -2,7 +2,14 @@
 
 namespace fs = std::filesystem;
 
-// Función para ejecutar experimentos de comparación
+/**
+ * @brief Ejecuta experimentos comparativos entre MergeSort y QuickSort en memoria externa.
+ * 
+ * @param optimalArity La aridad óptima (número de vías para MergeSort o subarreglos para QuickSort) calculada previamente.
+ * 
+ * Esta función genera datos aleatorios para diferentes tamaños de entrada, ejecuta ambos algoritmos,
+ * mide sus tiempos y operaciones de I/O, y guarda los resultados promediados en un archivo CSV.
+ */
 void runExperiments(size_t optimalArity) {
     std::cout << "\n=== Iniciando experimentos de comparación ===" << std::endl;
     
@@ -15,7 +22,9 @@ void runExperiments(size_t optimalArity) {
     // Memoria disponible (50 MB como indicado en el enunciado)
     const size_t MEMORY_LIMIT = 50 * 1024 * 1024;
     
-    // Resultados
+    /**
+     * @brief Estructura para almacenar resultados individuales (tiempo y operaciones de I/O).
+     */
     struct Result {
         double time;
         size_t io;
@@ -143,7 +152,14 @@ void runExperiments(size_t optimalArity) {
     std::cout << "\nResultados guardados en ./results/comparison_results.csv" << std::endl;
 }
 
-// Función principal actualizada para incluir experimentos
+/**
+ * @brief Función principal del programa.
+ * 
+ * @return int Código de salida (0 si éxito, otro valor si error).
+ * 
+ * Configura los parámetros iniciales (tamaño de bloque, memoria disponible),
+ * calcula la aridad óptima para los algoritmos y ejecuta los experimentos.
+ */
 int main() {
     // Nombre de archivos
     std::string inputFilename = "./dataExp/input_array.bin";

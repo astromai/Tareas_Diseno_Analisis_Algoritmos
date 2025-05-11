@@ -1,6 +1,6 @@
 # Compilador y banderas
 CXX := g++
-CXXFLAGS := -std=c++17 -Wall -Wextra -O3
+CXXFLAGS := -std=c++17 -Wall -Wextra -O0
 LDFLAGS := -lstdc++fs  # Necesario para std::filesystem
 
 # Nombre del ejecutable
