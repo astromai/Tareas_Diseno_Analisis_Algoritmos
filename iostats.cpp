@@ -1,8 +1,19 @@
 #include "iostats.h"
-#include <cstdint>
 #include <fstream>
 #include <vector>
+#include "constants.h"  // Necesario para la constante B
 
+// Implementación de métodos de IOStats
+size_t IOStats::total() const {
+    return reads + writes;
+}
+
+void IOStats::reset() {
+    reads = 0;
+    writes = 0;
+}
+
+// Implementación de plantillas
 template<typename T>
 size_t readBlock(std::ifstream& file, std::vector<T>& buffer, size_t count, IOStats& stats) {
     std::streampos posBefore = file.tellg();
@@ -13,7 +24,7 @@ size_t readBlock(std::ifstream& file, std::vector<T>& buffer, size_t count, IOSt
     
     if (itemsRead > 0) {
         size_t bytesRead = itemsRead * sizeof(T);
-        size_t blocksRead = (bytesRead + B - 1) / B;
+        size_t blocksRead = (bytesRead + B - 1) / B;  // Usa la constante B
         stats.reads += blocksRead;
     }
     
@@ -28,10 +39,10 @@ void writeBlock(std::ofstream& file, const std::vector<T>& buffer, IOStats& stat
     file.write(reinterpret_cast<const char*>(buffer.data()), buffer.size() * sizeof(T));
     
     size_t bytesWritten = buffer.size() * sizeof(T);
-    size_t blocksWritten = (bytesWritten + B - 1) / B;
+    size_t blocksWritten = (bytesWritten + B - 1) / B;  // Usa la constante B
     stats.writes += blocksWritten;
 }
 
-// Instanciaciones explícitas para int64_t
+// Instanciaciones explícitas
 template size_t readBlock<int64_t>(std::ifstream&, std::vector<int64_t>&, size_t, IOStats&);
 template void writeBlock<int64_t>(std::ofstream&, const std::vector<int64_t>&, IOStats&);

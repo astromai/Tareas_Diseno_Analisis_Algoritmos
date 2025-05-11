@@ -1,48 +1,54 @@
-# Variables
-CC = g++
-CFLAGS = -Wall -g
-TARGET = arity
-SRC = arity.cpp  # Especifica el archivo .cpp principal
-OBJ = $(SRC:.cpp=.o) # Convierte el archivo .cpp en un archivo .o
-TEMP_DIRS = $(wildcard temp*/)
+# Compilador y banderas
+CXX := g++
+CXXFLAGS := -std=c++17 -Wall -Wextra -O3
+LDFLAGS := 
 
-# Regla principal (compila y enlaza)
+# Nombre del ejecutable
+TARGET := arity
+
+# Archivos fuente y objetos
+SRC := arity.cpp mergesort.cpp iostats.cpp
+OBJ := $(SRC:.cpp=.o)
+HEADERS := arity.h mergesort.h iostats.h constants.h
+
+# Directorios temporales a limpiar
+TEMP_DIRS := $(wildcard temp_*/)
+
+.PHONY: all clean run debug
+
 all: $(TARGET)
 
+# Regla principal de compilación
 $(TARGET): $(OBJ)
-	$(CC) $(OBJ) -o $(TARGET)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
 
-# Regla para limpiar archivos y carpetas generadas
-clean:
-	# Elimina archivos de objetos
-	rm -f $(OBJ)
+# Regla para archivos objeto
+%.o: %.cpp $(HEADERS)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-	# Elimina el archivo principal ejecutable
-	rm -f $(TARGET)
-
-	# Elimina archivos generados temporalmente en cualquier carpeta 'temp'
-	find . -type f -name '*~' -exec rm -f {} \;  # Elimina archivos temporales
-	find . -type f -name '*.tmp' -exec rm -f {} \;  # Elimina archivos temporales con extensión .tmp
-
-	# Elimina las carpetas temporales vacías o no vacías
-	$(foreach dir, $(TEMP_DIRS), rm -rf $(dir))
-
-	# Elimina la carpeta 'data' y su contenido
-	rm -rf data
-
-	# Elimina la carpeta 'bin' y su contenido
-	rm -rf bin
-
-# Regla para compilar el archivo .cpp en .o
-%.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# Regla de ejecución
+# Regla para ejecutar
 run: $(TARGET)
 	./$(TARGET)
 
-# Regla de depuración (opcional)
-debug:
-	$(CC) $(SRC) -g -o $(TARGET)
+# Regla para depuración
+debug: CXXFLAGS += -g
+debug: clean $(TARGET)
 
-.PHONY: all clean debug run
+# Regla para limpieza
+clean:
+	# Archivos objeto y ejecutable
+	rm -f $(OBJ) $(TARGET)
+	
+	# Directorios temporales
+	rm -rf $(TEMP_DIRS)
+	
+	# Archivos generados
+	rm -rf data bin
+	
+	# Archivos temporales del editor
+	find . -type f \( -name '*~' -o -name '*.tmp' \) -delete
+
+# Dependencias específicas
+arity.o: arity.h mergesort.h iostats.h
+mergesort.o: mergesort.h iostats.h
+iostats.o: iostats.h

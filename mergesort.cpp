@@ -8,6 +8,9 @@
 #include <queue>
 #include <utility>
 #include <cmath>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 // Estructura para la cola de prioridad
 struct HeapNode {
