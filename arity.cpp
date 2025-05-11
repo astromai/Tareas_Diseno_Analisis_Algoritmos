@@ -16,7 +16,6 @@
 namespace fs = std::filesystem;
 
 // Implementación de funciones
-
 void generateData(const std::string& filename, int64_t size) {
     std::cout << "Generando " << size << " números aleatorios..." << std::endl;
     

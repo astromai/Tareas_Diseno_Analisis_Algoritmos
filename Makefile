@@ -1,18 +1,18 @@
 # Compilador y banderas
 CXX := g++
 CXXFLAGS := -std=c++17 -Wall -Wextra -O3
-LDFLAGS := 
+LDFLAGS := -lstdc++fs  # Necesario para std::filesystem
 
 # Nombre del ejecutable
-TARGET := arity
+TARGET := experiment
 
 # Archivos fuente y objetos
-SRC := arity.cpp mergesort.cpp iostats.cpp
+SRC := mergesort.cpp iostats.cpp experiment.cpp quicksort.cpp
 OBJ := $(SRC:.cpp=.o)
-HEADERS := arity.h mergesort.h iostats.h constants.h
+HEADERS := mergesort.h iostats.h constants.h quicksort.h experiment.h
 
 # Directorios temporales a limpiar
-TEMP_DIRS := $(wildcard temp_*/)
+TEMP_DIRS := $(wildcard temp_* temp_quick_*)
 
 .PHONY: all clean run debug
 
@@ -34,21 +34,22 @@ run: $(TARGET)
 debug: CXXFLAGS += -g
 debug: clean $(TARGET)
 
-# Regla para limpieza
+# Regla para limpieza completa
 clean:
 	# Archivos objeto y ejecutable
 	rm -f $(OBJ) $(TARGET)
 	
-	# Directorios temporales
+	# Directorios temporales de ordenamiento
 	rm -rf $(TEMP_DIRS)
 	
-	# Archivos generados
-	rm -rf data bin
+	# Directorios de datos y resultados
+	rm -rf data dataExp results bin
 	
 	# Archivos temporales del editor
-	find . -type f \( -name '*~' -o -name '*.tmp' \) -delete
+	find . -type f \( -name '*~' -o -name '*.tmp' -o -name '*.bin' \) -delete
 
 # Dependencias específicas
-arity.o: arity.h mergesort.h iostats.h
-mergesort.o: mergesort.h iostats.h
-iostats.o: iostats.h
+mergesort.o: mergesort.h iostats.h constants.h
+quicksort.o: quicksort.h iostats.h constants.h
+iostats.o: iostats.h constants.h
+experiment.o: experiment.h mergesort.h quicksort.h iostats.h constants.h
