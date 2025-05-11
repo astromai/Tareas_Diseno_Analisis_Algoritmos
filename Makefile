@@ -1,24 +1,48 @@
-CC = gcc
-CFLAGS = -std=c11 -Wall -O2
+# Variables
+CC = g++
+CFLAGS = -Wall -g
+TARGET = aridad_io
+SRC = aridad_io.cpp  # Especifica el archivo .cpp principal
+OBJ = $(SRC:.cpp=.o) # Convierte el archivo .cpp en un archivo .o
+TEMP_DIRS = $(wildcard temp*/)
 
-SRCS = main.c external_mergesort.c external_quicksort.c io_utils.c
-OBJS = $(SRCS:.c=.o)
-DEPS = external_mergesort.h external_quicksort.h io_utils.h
+# Regla principal (compila y enlaza)
+all: $(TARGET)
 
-EXEC = sorter
+$(TARGET): $(OBJ)
+	$(CC) $(OBJ) -o $(TARGET)
 
-.PHONY: all clean run
+# Regla para limpiar archivos y carpetas generadas
+clean:
+	# Elimina archivos de objetos
+	rm -f $(OBJ)
 
-all: $(EXEC)
+	# Elimina el archivo principal ejecutable
+	rm -f $(TARGET)
 
-$(EXEC): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
+	# Elimina archivos generados temporalmente en cualquier carpeta 'temp'
+	find . -type f -name '*~' -exec rm -f {} \;  # Elimina archivos temporales
+	find . -type f -name '*.tmp' -exec rm -f {} \;  # Elimina archivos temporales con extensión .tmp
 
-%.o: %.c $(DEPS)
+	# Elimina las carpetas temporales vacías o no vacías
+	$(foreach dir, $(TEMP_DIRS), rm -rf $(dir))
+
+	# Elimina la carpeta 'data' y su contenido
+	rm -rf data
+
+	# Elimina la carpeta 'bin' y su contenido
+	rm -rf bin
+
+# Regla para compilar el archivo .cpp en .o
+%.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
-run: all
-	./$(EXEC)
+# Regla de ejecución
+run: $(TARGET)
+	./$(TARGET)
 
-clean:
-	rm -f *.o $(EXEC) *.bin merge_* quick_* part_*.bin sorted_*.bin temp_*.bin
+# Regla de depuración (opcional)
+debug:
+	$(CC) $(SRC) -g -o $(TARGET)
+
+.PHONY: all clean debug run
