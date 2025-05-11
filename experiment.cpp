@@ -14,7 +14,7 @@ void runExperiments(size_t optimalArity) {
     std::cout << "\n=== Iniciando experimentos de comparación ===" << std::endl;
     
     // Tamaños de los arreglos a evaluar (en millones)
-    std::vector<int64_t> sizes = {4, 8, 12, 16};
+    std::vector<int64_t> sizes = {4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60};
     
     // Número de repeticiones por tamaño
     const int REPETITIONS = 5;
