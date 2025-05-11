@@ -12,7 +12,7 @@ Este repositorio contiene las implementaciones de algoritmos de ordenamiento ext
 ## <u>Para ejecutar el experimento</u>
 Para realizar el experimento:
 1) Sencillamente se debe clonar el repositorio con `git clone <url de la repo>`.
-2) Una vez dentro del repositorio, realizar en la consola `make run experiment` el cual ejecutar experiment.c
+2) Una vez dentro del repositorio, realizar en la consola `make run experiment` el cual ejecuta `experiment.c`.
 3) Si quieren utilizar el entorno de de docker seguir las indicaciones del siguiente link: https://hub.docker.com/r/pabloskewes/cc4102-cpp-env.
 
 Sugerimos que no ocupen 50mb como indica la tarea. En el informe se detalla mas al respecto, nosotros utilizamos 65mb que es lo minimo que nos sirvio para correr el experimento.
