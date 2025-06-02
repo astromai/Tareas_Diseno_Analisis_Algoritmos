@@ -1,4 +1,4 @@
-# Diseno y Analisis de algoritmos - CC4102
+# Diseno y Analisis de Algoritmos - CC4102
 
 Este ha sido nuestro trabajo de cada tarea. Los comandos utilizados fueron aprendidos buscando la documentación.
 
