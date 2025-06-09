@@ -10,4 +10,4 @@ Se programan distintas optimizaciones para el algoritmo, y posteriormente se com
 
 ## Compilación y Ejecución
 
-Desde la raíz del directorio, simplemente ```make```. Esto generará un ejecutable llamado main. Una vez compilado, se puede ejecutar el programa con: ./main
+Desde la raíz del directorio, simplemente ejecutar el comando ```make```. Una vez compilado, se puede ejecutar el programa con: ./test_kruskal. Si se quiere, se puede visualizar el algoritmo con ./grilla.
