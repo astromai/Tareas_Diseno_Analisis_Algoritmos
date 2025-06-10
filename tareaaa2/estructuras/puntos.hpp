@@ -15,8 +15,7 @@ class Punto {
 
     public:
         Punto();
-            pair<double, double> getPosition() const;
-
+        
             double getX() const { return x; };
             double getY() const { return y; };
 

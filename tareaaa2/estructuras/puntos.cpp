@@ -14,10 +14,6 @@ Punto::Punto():
 	}()),
 	padre(this) {}
 
-pair<double, double> Punto::getPosition() const {
-	return {x, y};
-}
-
 Punto* Punto::find_rep() {
 	if (padre != this) {
 		padre = padre->find_rep();  // path compression
