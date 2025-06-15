@@ -1,7 +1,7 @@
-# Tarea 1 Diseno Analisis Algoritmos
+# Tarea 1 - Mergesort externo V/S Quicksort externo
 
 ## <u>Descripción</u>
-Este repositorio contiene las implementaciones de algoritmos de ordenamiento externo (External MergeSort y QuickSort) y el calculo de aridad óptima desarrollados para el curso CC4102 - Diseño y Análisis de Algoritmos.
+Esta tarea contiene las implementaciones de algoritmos de ordenamiento externo (External MergeSort y QuickSort) y el calculo de aridad óptima desarrollados para el curso CC4102 - Diseño y Análisis de Algoritmos.
 
 ## <u>Requisitos</u>
 - Compilador C++17 (g++ 7 o superior recomendado).
