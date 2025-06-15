@@ -1,5 +1,5 @@
 # Tarea 1 Diseno Analisis Algoritmos
----
+
 ## <u>Descripción</u>
 Este repositorio contiene las implementaciones de algoritmos de ordenamiento externo (External MergeSort y QuickSort) y el calculo de aridad óptima desarrollados para el curso CC4102 - Diseño y Análisis de Algoritmos.
 
