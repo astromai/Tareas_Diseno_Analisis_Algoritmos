@@ -9,3 +9,6 @@
 
 # Ignorar sorter
 sorter
+
+# Ignorar builder
+tarea2/build/
