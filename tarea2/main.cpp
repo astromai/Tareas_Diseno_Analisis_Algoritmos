@@ -36,6 +36,22 @@ string generarNombreArchivo(const string& carpeta) {
     return carpeta + "/res" + to_string(maxN + 1) + ".csv";
 }
 
+// Funcion auxiliar
+std::string formatNumber(double num) {
+    std::ostringstream stream;
+    stream.precision(8);  // Define la cantidad de decimales que necesitas
+    stream << std::fixed << num;
+    std::string str = stream.str();
+    // Reemplazamos el punto por coma
+    for (char& c : str) {
+        if (c == '.') {
+            c = ',';
+            break;  // Solo cambiamos el primer punto encontrado
+        }
+    }
+    return str;
+}
+
 int main() {
 
     cout << '\n' <<"Test para probrar eficiencia del Algoritmo de Kruskal en distintos contextos. "  << '\n' << endl;
@@ -114,9 +130,9 @@ int main() {
     string nombreArchivo = generarNombreArchivo("build/resultado");
 
     ofstream archivo(nombreArchivo);
-    archivo << "N,KruskalSortOpt,KruskalHeapOpt,KruskalSortNoOpt,KruskalHeapNoOpt\n";
+    archivo << "N;KruskalSortOpt;KruskalHeapOpt;KruskalSortNoOpt;KruskalHeapNoOpt\n";
     for (const auto& [n, t1, t2, t3, t4] : resultados) {
-        archivo << n << "," << t1 << "," << t2 << "," << t3 << "," << t4 << "\n";
+        archivo << n << ";" << formatNumber(t1) << ";" << formatNumber(t2) << ";" << formatNumber(t3) << ";" << formatNumber(t4) << "\n";
     }
     archivo.close();
 
