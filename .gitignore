@@ -12,3 +12,7 @@ sorter
 
 # Ignorar builder
 tarea2/build/
+
+# Ignorar otros archivos
+tarea2/test_kruskal
+tarea2/grilla
