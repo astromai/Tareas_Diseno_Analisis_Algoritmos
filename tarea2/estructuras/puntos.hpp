@@ -19,9 +19,9 @@ class Punto {
             double getX() const { return x; };
             double getY() const { return y; };
 
-            Punto* find_rep();
+//            Punto* find_rep();
 
-            void set_padre(Punto* nuevo_padre);
+//            void set_padre(Punto* nuevo_padre);
 };
 
 namespace PuntoUtils 

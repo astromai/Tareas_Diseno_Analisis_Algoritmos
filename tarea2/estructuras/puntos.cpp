@@ -14,6 +14,7 @@ Punto::Punto():
 	}()),
 	padre(this) {}
 
+/*
 Punto* Punto::find_rep() {
 	if (padre != this) {
 		padre = padre->find_rep();  // path compression
@@ -21,10 +22,12 @@ Punto* Punto::find_rep() {
 	}
 	return padre;
 }
-
+*/
+/*
 void Punto::set_padre(Punto* nuevo_padre) {
     padre = nuevo_padre;
-	}
+}
+*/
 
 namespace PuntoUtils {
 	double getWeight(const Punto& p1,const Punto& p2) {
