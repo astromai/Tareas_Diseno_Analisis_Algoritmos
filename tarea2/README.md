@@ -1,15 +1,8 @@
-<<<<<<< HEAD
-# Tarea 2 - Algoritmo de Kruskal
-
-## Descripción
-Esta tarea presenta una implementación del algoritmo de Kruskal para obtener el árbol cobertor mínimo de un grafo. Se implementa también la interfaz Union-Find, para verificar la no formación de ciclos, etapa clave del algoritmo de Kruskal.
-=======
 # Tarea 2: Algoritmo de Kruskal
 
 ## Descripción
 
 Este proyecto implementa el algoritmo de Kruskal para obtener el árbol cobertor mínimo (Minimum Spanning Tree, MST) de un grafo definido por puntos en el plano. Además se incluye la estructura **Union-Find** (Conjuntos Disjuntos) con **path compression** y **union by size** para evitar ciclos durante la construcción del MST.
->>>>>>> 64c8a31 (Update readme and add documentation)
 
 Se han implementado cuatro variantes de Kruskal para comparar eficiencia:
 1. Con ordenamiento de aristas y optimización de Union-Find.
@@ -45,9 +38,6 @@ Para realizar el experimento:
 3) Una vez compilado, se puede ejecutar el programa con: `./test_kruskal`. 
 4) Para la visualización del algoritmo con: `./grilla`.
 
-<<<<<<< HEAD
-Si se quiere ver mas puntos dentro de la grilla, ir al archivo `grilla.cpp` y cambiar la linea comentada, esta predefinida en N=32.
-=======
 Desde la raíz del proyecto:
 
 ```bash
@@ -74,7 +64,3 @@ Para las firmas y documentación se utilizó la IA de Copilot.
 # Generar MST con heap y optimización
 ./test_kruskal --variant heap_opt --input datos/grafo.txt
 ```
-
----
-*Fin de la documentación del proyecto.*
->>>>>>> 64c8a31 (Update readme and add documentation)
