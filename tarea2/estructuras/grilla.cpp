@@ -82,7 +82,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    vector<Punto> puntos(32);
+    vector<Punto> puntos(32); // Cambiar para ver mas N puntos en el plano
 
     vector<Punto*> ptrs;
     for (auto& p : puntos) {

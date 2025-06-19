@@ -13,3 +13,5 @@ Para realizar el experimento:
 2) Desde la raíz del directorio, simplemente ejecutar el comando ```make```.
 3) Una vez compilado, se puede ejecutar el programa con: `./test_kruskal`. 
 4) Para la visualización del algoritmo con: `./grilla`.
+
+Si se quiere ver mas puntos dentro de la grilla, ir al archivo `grilla.cpp` y cambiar la linea comentada, esta predefinida en N=32.
